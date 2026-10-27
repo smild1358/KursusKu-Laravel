@@ -1,0 +1,79 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+:root {
+    --primary-teal: #0f766e;
+    --primary-dark: #0d625b;
+    --primary-light: #ccfbf1;
+    --accent-amber: #f59e0b;
+    --bg-body: #0f172a;
+    --card-glass: rgba(255, 255, 255, 0.85);
+    --card-border: rgba(15, 118, 110, 0.15);
+    --text-dark: #0f172a;
+    --text-muted: #64748b;
+}
+
+body {
+    background-color: #f8fafc;
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(15, 118, 110, 0.08) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(245, 158, 11, 0.05) 0px, transparent 50%);
+    background-attachment: fixed;
+    color: var(--text-dark);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    min-height: 100vh;
+}
+
+/* Glassmorphism Components */
+.glass-card {
+    background: var(--card-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(15, 118, 110, 0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 25px 50px rgba(15, 118, 110, 0.12);
+}
+
+.navbar-custom {
+    background: rgba(15, 23, 42, 0.95) !important;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-teal {
+    background: linear-gradient(135deg, #0f766e 0%, #0d625b 100%);
+    color: #ffffff;
+    font-weight: 700;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 24px;
+    transition: all 0.3s ease;
+}
+
+.btn-teal:hover {
+    background: linear-gradient(135deg, #115e59 0%, #042f2e 100%);
+    color: #ffffff;
+    box-shadow: 0 10px 20px rgba(15, 118, 110, 0.3);
+}
+
+/* Floating Debug Inspector Box */
+.debug-inspector {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 340px;
+    background: rgba(15, 23, 42, 0.92);
+    border: 1px solid #38bdf8;
+    color: #38bdf8;
+    border-radius: 14px;
+    padding: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+}
