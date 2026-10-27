@@ -1,21 +1,34 @@
-kursusku/
-├── resources/
-│   ├── css/
-│   │   └── app.css               # Modern Glassmorphism & Micro-animations
-│   ├── js/
-│   │   └── app.js                # jQuery Ajax Engine + Live Calculator + Floating Debugger
-│   └── views/
-│       ├── layouts/
-│       │   └── app.blade.php     # Master Layout Reusable
-│       ├── partials/
-│       │   └── navbar.blade.php  # Responsive Dynamic Navbar
-│       ├── home.blade.php        # Glassmorphic Hero & Course Cards
-│       └── enrollments/
-│           └── create.blade.php  # Form Pendaftaran + Live Calculator & Seat Status Bar
+KursusKu-Laravel/
 ├── app/
-│   Http/
-│   └── Controllers/
-│       ├── HomeController.php   # Controller Halaman Utama
-│       └── CourseController.php # Controller Pendaftaran & JSON Availability Endpoint
-└── routes/
-    └── web.php                   # Named Routes & Ajax JSON Endpoints
+│   ├── Http/
+│   │   Controllers/
+│   │   │   ├── CourseController.php
+│   │   │   └── RegistrationController.php
+│   │   Requests/
+│   │   │   └── StoreRegistrationRequest.php
+│   ├── Models/
+│   │   ├── Course.php
+│   │   └── Registration.php
+├── database/
+│   ├── migrations/
+│   │   ├── create_courses_table.php
+│   │   └── create_registrations_table.php
+│   └── seeders/
+│       └── CourseSeeder.php
+├── resources/
+│   ├── views/
+│   │   ├── components/
+│   │   │   ├── navbar.blade.php
+│   │   │   ├── footer.blade.php
+│   │   │   └── course-card.blade.php
+│   │   ├── layouts/
+│   │   │   └── app.blade.php
+│   │   ├── courses/
+│   │   │   └── index.blade.php
+│   │   ├── registrations/
+│   │   │   ├── create.blade.php
+│   │   │   └── history.blade.php
+│   │   └── welcome.blade.php
+├── routes/
+│   └── web.php
+└── README.md

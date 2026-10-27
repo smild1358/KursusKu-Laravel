@@ -1,64 +1,45 @@
-<?php
-
 namespace App\Http\Controllers;
 
+use App\Models\Registration;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
 {
-    private function getCoursesData()
-    {
-        return [
-            1 => ['name' => 'Web Dasar HTML & CSS', 'fee' => 300000, 'remaining' => 12, 'capacity' => 20],
-            2 => ['name' => 'PHP Fundamental & OOP', 'fee' => 350000, 'remaining' => 4, 'capacity' => 20],
-            3 => ['name' => 'Laravel Framework Mastery', 'fee' => 500000, 'remaining' => 8, 'capacity' => 20],
-        ];
+    public function index() {
+        return view('home');
     }
 
-    private function getFacilitiesData()
-    {
-        return [
-            'cert' => ['name' => 'Sertifikat Fisik & E-Badge', 'fee' => 50000],
-            'modul' => ['name' => 'Modul Cetak & Source Code', 'fee' => 75000],
-            'lab' => ['name' => 'Akses Server Lab Cloud (1 Bulan)', 'fee' => 100000],
-        ];
+    public function createRegistration() {
+        return view('registrations.create');
     }
 
-    public function create()
-    {
-        $courses = $this->getCoursesData();
-        $facilities = $this->getFacilitiesData();
-
-        return view('enrollments.create', compact('courses', 'facilities'));
-    }
-
-    public function preview(Request $request)
-    {
-        $request->validate([
-            'name' => ['required', 'string', 'min:3', 'max:100'],
-            'email' => ['required', 'email'],
-            'course_id' => ['required', 'integer'],
+    public function storeRegistration(Request $request) {
+        $validated = $request->validate([
+            'full_name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'phone' => 'required|string|max:15',
+            'participant_type' => 'required|string',
+            'course_name' => 'required|string',
+            'learning_mode' => 'required|string',
         ]);
 
-        return back()
-            ->with('success', 'Form berhasil divalidasi dan siap diproses! (Database CRUD akan aktif di Pertemuan 10).')
-            ->withInput();
+        // Kalkulasi Biaya Sederhana Berdasarkan Tipe Peserta
+        $baseFee = 500000;
+        $discount = match($validated['participant_type']) {
+            'Mahasiswa' => 0.20,
+            'Guru' => 0.15,
+            default => 0.05,
+        };
+
+        $validated['total_fee'] = $baseFee - ($baseFee * $discount);
+
+        Registration::create($validated);
+
+        return redirect()->route('registrations.history')->with('success', 'Pendaftaran KursusKu berhasil disimpan!');
     }
 
-    // JSON Endpoint untuk Ajax Request
-    public function availability(int $course)
-    {
-        $courses = $this->getCoursesData();
-
-        abort_unless(isset($courses[$course]), 404);
-
-        $data = $courses[$course];
-
-        return response()->json([
-            'course' => $data['name'],
-            'remaining' => $data['remaining'],
-            'total_capacity' => $data['capacity'],
-            'price' => $data['fee']
-        ]);
+    public function history() {
+        $registrations = Registration::latest()->get();
+        return view('registrations.history', compact('registrations'));
     }
 }
