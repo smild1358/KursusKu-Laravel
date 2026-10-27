@@ -1,16 +1,10 @@
-<?php
-
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CourseController;
 
-// Landing Page Route
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', [CourseController::class, 'index'])->name('home');
 
-// Form Pendaftaran Routes
+// Route Pendaftaran
 Route::get('/pendaftaran', [CourseController::class, 'create'])->name('enrollments.create');
-Route::post('/pendaftaran/preview', [CourseController::class, 'preview'])->name('enrollments.preview');
+Route::post('/pendaftaran/store', [CourseController::class, 'store'])->name('enrollments.store');
 
-// Async Ajax Availability JSON Route
-Route::get('/courses/{course}/availability', [CourseController::class, 'availability'])->name('courses.availability');
+// Route Riwayat
+Route::get('/history', [CourseController::class, 'history'])->name('registrations.history');
