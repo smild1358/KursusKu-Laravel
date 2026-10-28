@@ -1,5 +1,9 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CourseController;
 
+// Landing Page Route
 Route::get('/', [CourseController::class, 'index'])->name('home');
 
 // Route Pendaftaran
