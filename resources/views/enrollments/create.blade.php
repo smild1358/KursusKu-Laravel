@@ -18,7 +18,8 @@
 
             <form method="POST" action="{{ route('enrollments.preview') }}">
                 @csrf
-
+                <!-- input form lainnya -->
+           
                 <!-- Nama Lengkap -->
                 <div class="mb-3">
                     <label for="name" class="form-label fw-bold"><i class="fa-solid fa-user me-1 text-teal"></i> Nama Lengkap</label>

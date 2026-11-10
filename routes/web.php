@@ -1,18 +1,26 @@
-<?php
-
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CourseController;
 
-// Landing Page
-Route::get('/', [CourseController::class, 'index'])->name('home');
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
 
-// Resource / Route CRUD Pendaftaran KursusKu
-Route::get('/pendaftaran', [CourseController::class, 'create'])->name('enrollments.create');
-Route::post('/pendaftaran/store', [CourseController::class, 'store'])->name('enrollments.store');
+// Rute untuk halaman utama / beranda
+Route::get('/', function () {
+    return view('welcome'); // Pastikan Anda memiliki file resources/views/welcome.blade.php
+});
 
-// Manajemen Data (Index, Show, Edit, Update, Delete)
-Route::get('/history', [CourseController::class, 'listData'])->name('registrations.index');
-Route::get('/pendaftaran/{id}/edit', [CourseController::class, 'edit'])->name('registrations.edit');
-Route::put('/pendaftaran/{id}', [CourseController::class, 'update'])->name('registrations.update');
-Route::delete('/pendaftaran/{id}', [CourseController::class, 'destroy'])->name('registrations.destroy');
-Route::get('/pendaftaran/{id}', [CourseController::class, 'show'])->name('registrations.show');
+// Rute untuk halaman pendaftaran (Tombol "Daftar Sekarang")
+Route::get('/registration', function () {
+    return view('registration'); // Pastikan Anda membuat file resources/views/registration.blade.php
+})->name('registration');
+
+// Atau jika Anda menggunakan Controller untuk proses pendaftaran, gunakan format seperti di bawah ini:
+// use App\Http\Controllers\RegistrationController;
+// Route::get('/registration', [RegistrationController::class, 'index'])->name('registration');
