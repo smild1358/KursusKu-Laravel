@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Matrix - Pertemuan 7 (KursusKu Laravel)</title>
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --primary-dark: #3730a3;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --success-bg: #dcfce7;
+            --success-text: #166534;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            overflow: hidden;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 1.5rem;
+        }
+
+        .header h1 {
+            color: var(--primary-color);
+            margin: 0 0 0.5rem 0;
+            font-size: 2rem;
+        }
+
+        .header p {
+            color: var(--text-muted);
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.90rem;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 15px;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: middle;
+        }
+
+        tr:hover {
+            background-color: #f1f5f9;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background-color: var(--success-bg);
+            color: var(--success-text);
+        }
+
+        .badge-get {
+            background-color: #e0f2fe;
+            color: #0369a1;
+        }
+
+        .badge-post {
+            background-color: #ffedd5;
+            color: #c2410c;
+        }
+
+        .code-inline {
+            background-color: #f1f5f9;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #d946ef;
+            font-size: 0.85rem;
+        }
+
+        .footer {
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+            padding-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>📊 Test Matrix - Pengujian Mandiri (12 Kasus Uji)</h1>
+        <p>Modul: Framework Laravel (Route, Controller, View, & Blade Engine) — KursusKu</p>
+    </div>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Modul / Fitur</th>
+                    <th>Jenis Pengujian / Skenario</th>
+                    <th>Metode / Endpoint</th>
+                    <th>Hasil yang Diharapkan</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Landing Page</td>
+                    <td>Akses halaman utama root sistem</td>
+                    <td><span class="badge badge-get">GET</span> <span class="code-inline">/</span></td>
+                    <td>Menampilkan halaman beranda utama Laravel dengan sukses.</td>
+                    <td><span class="badge badge-success">Valid (Pass)</span></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Navigasi Menu</td>
+                    <td>Klik tombol menuju Alur MVC</td>
+                    <td><span class="badge badge-get">GET</span> <span class="code-inline">/kursus</span></td>
+                    <td>Berpindah ke halaman penjelasan arsitektur Alur MVC.</td>
+                    <td><span class="badge badge-success">Valid (Pass)</span></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Daftar Kursus</td>
+                    <td>Mengakses halaman katalog kursus pilihan</td>
+                    <td><span class="badge badge-get">GET</span> <span class="code-inline">/kursus/pilihan</span></td>
+                    <td>Menampilkan grid pilihan kursus IT dan pemrograman.</td>
+                    <td><span class="badge badge-success">Valid (Pass)</span></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Ketersediaan Kursus</td>
+                    <td>Cek status ketersediaan kursus spesifik</td>
+                    <td><span class="badge badge-get">GET</span> <span class="code-inline">/courses/{course}/availability</span></td>
+                    <td>Menampilkan status slot kursus secara dinamis via parameter.</td>
+                    <td><span class="badge badge-success">Valid (Pass)</span></td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>Form Pendaftaran</td>
+                    <td>Mengakses halaman form registrasi kursus</td>
+                    <td><span class="badge badge-get">GET</span> <span class="code-inline">/pendaftaran</span></td>
+                    <td>Menampilkan antarmuka formulir input data siswa.</td>
+                    <td><span class="badge badge-success">Valid (Pass)</span></td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>Pratinjau Pendaftaran</td>
+                    <td>Mengirim data form input (Preview Data)</td>
+                    <td><span class="badge badge-post">POST</span> <span class="code-inline">/pendaftaran/preview</span></td>
+                    <td>Memproses dan merender pratinjau data pendaftaran dengan benar.</td>
+                    <td><span class="badge badge-success">Valid (Pass)</span></td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>Storage Publik</td>
+                    <td>Mengakses file dokumen lokal storage via symlink</td>
+                    <td><span class="badge badge-get">GET</span> <span class="code-inline">/storage/{path}</span></td>
+                    <td>File lampiran atau aset gambar berhasil diunduh/ditampilkan.</td>
+                    <td><span class="badge badge-success">Valid (Pass)</span></td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>Manajemen File Unggahan</td>
+                    <td>Uji coba rute penyimpanan file unggahan privat</td>
+                    <td><span class="badge badge-get">PUT</span> <span class="code-inline">/storage/{path}</span></td>
+                    <td>Sistem merespons pembaruan file secara aman.</td>
+                    <td><span class="badge badge-success">Valid (Pass)</span></td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td>Validasi Input Kosong</td>
+                    <td>Submit form pendaftaran tanpa mengisi field wajib</td>
+                    <td><span class="badge badge-post">POST</span> <span class="code-inline">/pendaftaran</span></td>
+                    <td>Menampilkan pesan peringatan validasi error di form.</td>
+                    <td><span class="badge badge-success">Valid (Pass)</span></td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>Responsivitas Mobile</td>
+                    <td>Uji tampilan web pada ukuran layar perangkat seluler</td>
+                    <td><span class="badge">UI/UX</span> <span class="code-inline">Viewport 375px</span></td>
+                    <td>Layout menyesuaikan layar dengan baik tanpa elemen terpotong.</td>
+                    <td><span class="badge badge-success">Valid (Pass)</span></td>
+                </tr>
+                <tr>
+                    <td>11</td>
+                    <td>Pengecekan Route Artisan</td>
+                    <td>Menjalankan perintah daftar route di terminal</td>
+                    <td><span class="badge">CLI</span> <span class="code-inline">php artisan route:list</span></td>
+                    <td>Seluruh 7+ endpoint terdaftar rapi beserta action controllernya.</td>
+                    <td><span class="badge badge-success">Valid (Pass)</span></td>
+                </tr>
+                <tr>
+                    <td>12</td>
+                    <td>Error Handling 404</td>
+                    <td>Mengakses URL atau endpoint yang tidak terdaftar</td>
+                    <td><span class="badge badge-get">GET</span> <span class="code-inline">/url-salah</span></td>
+                    <td>Menampilkan halaman kustom 404 Not Found dengan elegan.</td>
+                    <td><span class="badge badge-success">Valid (Pass)</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer">
+        <p>Dokumentasi Pengujian Sistem Mandiri — KursusKu Laravel Elite Edition © 2026</p>
+    </div>
+</div>
+
+</body>
+</html>

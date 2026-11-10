@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Lifecycle - Laravel Framework (KursusKu)</title>
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
+            --primary: #6366f1;
+            --accent: #ec4899;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            margin: 0;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin: 0 0 0.5rem 0;
+            background: linear-gradient(135deg, #818cf8, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        /* Grid Alur Siklus */
+        .lifecycle-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            position: relative;
+        }
+
+        .step-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            position: relative;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        .step-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 15px 30px -5px rgba(99, 102, 241, 0.3);
+        }
+
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1rem;
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.4);
+        }
+
+        .step-content {
+            margin-top: 10px;
+        }
+
+        .step-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .step-card h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.25rem;
+            color: #f1f5f9;
+        }
+
+        .step-card p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .badge-code {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.15);
+            color: #a5b4fc;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            margin-top: 0.75rem;
+        }
+
+        .footer-note {
+            margin-top: 3rem;
+            background: rgba(30, 41, 59, 0.7);
+            border-left: 4px solid var(--primary);
+            padding: 1rem 1.5rem;
+            border-radius: 0 12px 12px 0;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .footer-note strong {
+            color: var(--text-main);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>⚡ Laravel Request Lifecycle Architecture</h1>
+        <p>Perjalanan sebuah permintaan (request) dari pengguna hingga menjadi respons yang diterima kembali oleh browser.</p>
+    </div>
+
+    <div class="lifecycle-grid">
+        <!-- Step 1 -->
+        <div class="step-card">
+            <div class="step-number">1</div>
+            <div class="step-content">
+                <div class="step-icon">👤💻</div>
+                <h3>User Request</h3>
+                <p>Pengguna mengirimkan permintaan melalui browser (HTTP/HTTPS), misalnya membuka halaman web atau mengirim data formulir.</p>
+                <div class="badge-code">public/index.php</div>
+            </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step-card">
+            <div class="step-number">2</div>
+            <div class="step-content">
+                <div class="step-icon">🌐⚙️</div>
+                <h3>Request Masuk ke Web Server</h3>
+                <p>Permintaan diterima oleh web server (Apache/Nginx) yang bertugas meneruskan seluruh proses masuk ke dalam sistem aplikasi.</p>
+                <div class="badge-code">Apache / Nginx</div>
+            </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step-card">
+            <div class="step-number">3</div>
+            <div class="step-content">
+                <div class="step-icon">⚙️🚀</div>
+                <h3>Proses di Aplikasi (Route & Controller)</h3>
+                <p>Aplikasi PHP memproses permintaan, mencocokkan jalur (routing), lalu menjalankan logika bisnis di dalam Controller.</p>
+                <div class="badge-code">routes/web.php & Controller</div>
+            </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="step-card">
+            <div class="step-number">4</div>
+            <div class="step-content">
+                <div class="step-icon">🗄️📊</div>
+                <h3>Akses ke Database</h3>
+                <p>Jika diperlukan, aplikasi mengirimkan query ke database untuk mengambil, memodifikasi, atau menyimpan data melalui Model.</p>
+                <div class="badge-code">Eloquent ORM / SQL</div>
+            </div>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="step-card">
+            <div class="step-number">5</div>
+            <div class="step-content">
+                <div class="step-icon">📑🔄</div>
+                <h3>Respons Diproses (Blade Engine)</h3>
+                <p>Data dari database diolah dan dilempar ke template Blade untuk dirender menjadi format HTML yang bersih dan dinamis.</p>
+                <div class="badge-code">resources/views/*.blade.php</div>
+            </div>
+        </div>
+
+        <!-- Step 6 -->
+        <div class="step-card">
+            <div class="step-number">6</div>
+            <div class="step-content">
+                <div class="step-icon">📦🌐</div>
+                <h3>Respons Dikirim ke Client</h3>
+                <p>Web server mengirimkan kembali respons matang ke browser pengguna melalui protokol standar HTTP/HTTPS.</p>
+                <div class="badge-code">HTTP Response</div>
+            </div>
+        </div>
+
+        <!-- Step 7 -->
+        <div class="step-card" style="grid-column: span auto;">
+            <div class="step-number">7</div>
+            <div class="step-content">
+                <div class="step-icon">🖥️✨</div>
+                <h3>Tampilan di Browser</h3>
+                <p>Browser menerima paket respons tersebut dan menampilkannya secara visual kepada pengguna dalam bentuk halaman web yang interaktif.</p>
+                <div class="badge-code">Render HTML / CSS / JS</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        <p><strong>Catatan Arsitektur:</strong> Siklus permintaan Laravel memastikan pemisahan tugas yang jelas (*Separation of Concerns*) antara penanganan rute, logika pengontrol, interaksi basis data, hingga penyajian antarmuka pengguna.</p>
+    </div>
+</div>
+
+</body>
+</html>

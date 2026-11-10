@@ -1,4 +1,6 @@
+<?php
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EnrollmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,14 +15,12 @@ use Illuminate\Support\Facades\Route;
 
 // Rute untuk halaman utama / beranda
 Route::get('/', function () {
-    return view('welcome'); // Pastikan Anda memiliki file resources/views/welcome.blade.php
-});
+    return view('welcome'); 
+})->name('home');
 
 // Rute untuk halaman pendaftaran (Tombol "Daftar Sekarang")
 Route::get('/registration', function () {
-    return view('registration'); // Pastikan Anda membuat file resources/views/registration.blade.php
+    return view('registration'); 
 })->name('registration');
 
-// Atau jika Anda menggunakan Controller untuk proses pendaftaran, gunakan format seperti di bawah ini:
-// use App\Http\Controllers\RegistrationController;
-// Route::get('/registration', [RegistrationController::class, 'index'])->name('registration');
+Route::post('/enrollment/preview', [EnrollmentController::class, 'preview'])->name('enrollments.preview');
