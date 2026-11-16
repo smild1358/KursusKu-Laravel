@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full scroll-smooth">
+<html lang="en" class="h-full scroll-smooth">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>KursusKu - Platform Pelatihan Digital & Sertifikasi</title>
-
     <!-- Google Fonts: Plus Jakarta Sans & Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -49,7 +48,7 @@
     <!-- SITE HEADER & NAVBAR -->
     <header class="sticky top-4 z-50 mx-4 sm:mx-8 lg:mx-16">
         <nav class="glass-card shadow-lg rounded-2xl px-6 py-4 flex items-center justify-between transition-all duration-300">
-            <a href="{{ url('/') }}" class="flex items-center gap-3 group">
+            <a href="http://kursusku.test" class="flex items-center gap-3 group">
                 <div class="w-10 h-10 rounded-xl bg-teal-700 flex items-center justify-center text-white shadow-md shadow-teal-700/30 group-hover:scale-105 transition-transform">
                     <i class="fa-solid fa-graduation-cap text-lg"></i>
                 </div>
@@ -59,16 +58,19 @@
                 </div>
             </a>
             
+            <!-- Navbar Links (Ditambahkan menu 'Media' & 'Daftar Kursus' sesuai referensi teman) -->
             <div class="hidden lg:flex items-center gap-6 font-medium text-sm text-slate-600">
-                <a href="{{ url('/') }}" class="hover:text-teal-700 transition-colors">Beranda</a>
+                <a href="http://kursusku.test" class="hover:text-teal-700 transition-colors">Beranda</a>
                 <a href="#keunggulan" class="hover:text-teal-700 transition-colors">Keunggulan</a>
                 <a href="#katalog" class="hover:text-teal-700 transition-colors">Katalog</a>
                 <a href="#pendaftaran" class="hover:text-teal-700 transition-colors">Cara Daftar</a>
+                <a href="#media" class="hover:text-teal-700 transition-colors">Media</a>
+                <a href="http://kursusku.test/registration" class="text-amber-600 font-semibold hover:text-amber-700 transition-colors">Daftar Kursus</a>
                 <a href="#kontak" class="hover:text-teal-700 transition-colors">Kontak</a>
             </div>
 
             <div class="flex items-center gap-3">
-                <a href="{{ url('/registration') }}" class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-teal-700 text-white font-semibold text-sm shadow-lg shadow-teal-700/25 hover:bg-teal-800 active:scale-95 transition-all">
+                <a href="http://kursusku.test/registration" class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-teal-700 text-white font-semibold text-sm shadow-lg shadow-teal-700/25 hover:bg-teal-800 active:scale-95 transition-all">
                     Daftar Sekarang <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
                 </a>
             </div>
@@ -86,27 +88,35 @@
                         <i class="fa-solid fa-rocket mr-2 text-teal-600"></i> Platform Edukasi Digital Terdepan
                     </span>
                     <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight">
-                        Tingkatkan Keterampilan Bersama <span class="text-teal-700">KursusKu</span>
+                        Selamat Datang di <span class="text-teal-700">KursusKu</span>
                     </h1>
                     <p class="text-lg text-slate-600 leading-relaxed">
-                        Platform Pelatihan &amp; Sertifikasi Keterampilan Digital Terdepan dengan kurikulum berbasis proyek nyata dan mentor profesional.
+                        Platform belajar teknologi untuk mahasiswa yang ingin meningkatkan kemampuan pemrograman web dengan kurikulum berbasis proyek nyata.
                     </p>
+                    
+                    <!-- Tombol Aksi Hero (Ditambahkan tombol 'Lihat Estimasi Biaya' sesuai referensi) -->
                     <div class="flex flex-wrap gap-4 pt-2">
                         <a href="#katalog" class="inline-flex items-center justify-center px-6 py-3.5 rounded-xl bg-teal-700 text-white font-semibold shadow-lg shadow-teal-700/25 hover:bg-teal-800 active:scale-95 transition-all">
-                            <i class="fa-solid fa-layer-group mr-2"></i> Lihat Katalog
+                            <i class="fa-solid fa-layer-group mr-2"></i> Lihat Kursus
                         </a>
-                        <a href="{{ url('/registration') }}" class="inline-flex items-center justify-center px-6 py-3.5 rounded-xl bg-white text-slate-700 font-semibold border border-slate-300 hover:bg-slate-50 transition-all">
-                            <i class="fa-solid fa-user-plus mr-2"></i> Form Pendaftaran
+                        <a href="#katalog" class="inline-flex items-center justify-center px-6 py-3.5 rounded-xl bg-slate-100 text-slate-700 font-semibold border border-slate-200 hover:bg-slate-200 transition-all">
+                            <i class="fa-solid fa-calculator mr-2"></i> Lihat Estimasi Biaya
+                        </a>
+                        <a href="http://kursusku.test/registration" class="inline-flex items-center justify-center px-6 py-3.5 rounded-xl bg-white text-slate-700 font-semibold border border-slate-300 hover:bg-slate-50 transition-all">
+                            <i class="fa-solid fa-user-plus mr-2"></i> Daftar Kursus
                         </a>
                     </div>
                 </div>
+
+                <!-- Ilustrasi Kartu Visual AI/Robotics khas KursusKu -->
                 <div class="lg:col-span-5">
-                    <div class="glass-card p-8 rounded-3xl text-center shadow-xl shadow-teal-900/5 border border-teal-100">
-                        <div class="w-20 h-20 mx-auto bg-teal-700 text-white rounded-2xl flex items-center justify-center text-4xl mb-6 shadow-lg shadow-teal-700/30">
-                            <i class="fa-solid fa-laptop-code"></i>
+                    <div class="glass-card p-6 rounded-3xl shadow-xl shadow-teal-900/5 border border-teal-100 text-center">
+                        <div class="rounded-2xl overflow-hidden shadow-md mb-4 bg-slate-900">
+                            <!-- Banner Ilustrasi Interaktif / Gambar Pemrograman Web -->
+                            <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=600&q=80" alt="Ilustrasi Pemrograman KursusKu" class="w-full h-48 object-cover opacity-90 hover:scale-105 transition-transform duration-500">
                         </div>
-                        <h3 class="text-xl font-bold text-slate-900 mb-2">Belajar Fleksibel &amp; Interaktif</h3>
-                        <p class="text-sm text-slate-500">Akses modul pembelajaran berkualitas tinggi kapan saja dan di mana saja.</p>
+                        <h3 class="text-lg font-bold text-slate-900 mb-1">Interactive Learning Studio</h3>
+                        <p class="text-xs text-slate-500">Belajar coding interaktif langsung dari browser dengan mentor berpengalaman.</p>
                     </div>
                 </div>
             </div>
@@ -146,7 +156,7 @@
                 </div>
             </div>
 
-            <!-- FILTER BAR (Dummy UI Interaktif) -->
+            <!-- FILTER BAR -->
             <div class="glass-card p-6 rounded-2xl mb-8 shadow-sm">
                 <form method="GET" action="#katalog" class="flex flex-wrap gap-4 items-center">
                     <input type="text" name="search" class="flex-1 min-w-[220px] px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" placeholder="Cari nama atau kode kursus...">
@@ -184,7 +194,7 @@
                             <span class="text-slate-500 text-sm">Biaya</span>
                             <span class="text-lg font-extrabold text-teal-700 font-mono">Rp 200.000</span>
                         </div>
-                        <a href="{{ url('/registration?course=WEB-01') }}" class="w-full inline-flex items-center justify-center px-4 py-3 rounded-xl bg-teal-700 text-white font-semibold text-sm hover:bg-teal-800 transition-all shadow-md shadow-teal-700/20">
+                        <a href="http://kursusku.test/registration?course=WEB-01" class="w-full inline-flex items-center justify-center px-4 py-3 rounded-xl bg-teal-700 text-white font-semibold text-sm hover:bg-teal-800 transition-all shadow-md shadow-teal-700/20">
                             Daftar Sekarang <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
                         </a>
                     </div>
@@ -211,7 +221,7 @@
                             <span class="text-slate-500 text-sm">Biaya</span>
                             <span class="text-lg font-extrabold text-teal-700 font-mono">Rp 250.000</span>
                         </div>
-                        <a href="{{ url('/registration?course=PHP-01') }}" class="w-full inline-flex items-center justify-center px-4 py-3 rounded-xl bg-teal-700 text-white font-semibold text-sm hover:bg-teal-800 transition-all shadow-md shadow-teal-700/20">
+                        <a href="http://kursusku.test/registration?course=PHP-01" class="w-full inline-flex items-center justify-center px-4 py-3 rounded-xl bg-teal-700 text-white font-semibold text-sm hover:bg-teal-800 transition-all shadow-md shadow-teal-700/20">
                             Daftar Sekarang <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
                         </a>
                     </div>
@@ -293,7 +303,6 @@
                 </div>
             </div>
         </section>
-
     </main>
 
     <!-- FOOTER -->
@@ -303,9 +312,8 @@
                 <p class="text-white font-bold text-lg">KursusKu Laravel Platform</p>
                 <p class="text-sm text-slate-500 mt-1">Modul Praktikum Pemrograman Web III (FTIK-PTIK UIN Bukittinggi)</p>
             </div>
-            <p class="text-xs text-slate-500">&copy; 2026 <strong>KursusKu</strong>. Hak Cipta Dilindungi. Laravel v{{ Illuminate\Foundation\Application::VERSION }}</p>
+            <p class="text-xs text-slate-500">&copy; 2026 <strong>KursusKu</strong>. Hak Cipta Dilindungi. Laravel v10.50.4</p>
         </div>
     </footer>
-
 </body>
 </html>

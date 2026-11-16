@@ -82,34 +82,103 @@
             <form action="{{ route('enrollments.preview') }}" method="POST" class="space-y-6">
                 @csrf
                 
+                <!-- Nama Lengkap -->
                 <div>
-                    <label class="block text-sm font-semibold text-slate-700 mb-2">Nama Lengkap</label>
-                    <input type="text" name="nama" required class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" placeholder="Masukkan nama lengkap Anda">
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Nama Lengkap *</label>
+                    <input type="text" name="nama" value="{{ old('nama') }}" required class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" placeholder="Masukkan nama lengkap Anda">
                 </div>
 
+                <!-- Alamat Email -->
                 <div>
-                    <label class="block text-sm font-semibold text-slate-700 mb-2">Alamat Email</label>
-                    <input type="email" name="email" required class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" placeholder="nama@email.com">
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Alamat Email *</label>
+                    <input type="email" name="email" value="{{ old('email') }}" required class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" placeholder="nama@email.com">
                 </div>
 
+                <!-- Nomor WhatsApp / Telepon -->
                 <div>
-                    <label class="block text-sm font-semibold text-slate-700 mb-2">Pilih Program Kursus</label>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Nomor HP / WhatsApp *</label>
+                    <input type="text" name="telepon" value="{{ old('telepon') }}" required class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" placeholder="0812xxxxxxxx">
+                </div>
+
+                <!-- Program Studi (Tambahan baru sesuai referensi teman) -->
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Program Studi / Jurusan</label>
+                    <input type="text" name="prodi" value="{{ old('prodi') }}" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" placeholder="Contoh: PTIK / Teknik Informatika">
+                </div>
+
+                <!-- Pilih Program Kursus -->
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Pilih Kursus *</label>
                     <select name="course" required class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500">
                         <option value="">-- Pilih Kursus --</option>
-                        <option value="WEB-01">Web Dasar (Rp 200.000)</option>
-                        <option value="PHP-01">PHP Dasar (Rp 250.000)</option>
+                        <option value="WEB-01" {{ old('course') == 'WEB-01' ? 'selected' : '' }}>Web Dasar (Rp 200.000)</option>
+                        <option value="PHP-01" {{ old('course') == 'PHP-01' ? 'selected' : '' }}>PHP Dasar (Rp 250.000)</option>
                         <option value="LAR-01" disabled>Laravel Fundamental - Penuh</option>
                     </select>
                 </div>
 
+                <!-- Metode Belajar (Tambahan baru) -->
                 <div>
-                    <label class="block text-sm font-semibold text-slate-700 mb-2">Nomor WhatsApp / Telepon</label>
-                    <input type="text" name="telepon" required class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" placeholder="0812xxxxxxxx">
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Metode Belajar *</label>
+                    <select name="metode" required class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500">
+                        <option value="">-- Pilih Metode --</option>
+                        <option value="Online (Zoom/Meet)" {{ old('metode') == 'Online (Zoom/Meet)' ? 'selected' : '' }}>Online (Zoom/Meet)</option>
+                        <option value="Offline (Tatap Muka)" {{ old('metode') == 'Offline (Tatap Muka)' ? 'selected' : '' }}>Offline (Tatap Muka)</option>
+                        <option value="Hybrid" {{ old('metode') == 'Hybrid' ? 'selected' : '' }}>Hybrid Learning</option>
+                    </select>
                 </div>
 
+                <!-- Jenis Peserta (Radio Button Tambahan) -->
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Jenis Peserta *</label>
+                    <div class="flex flex-wrap gap-6 mt-2">
+                        <label class="flex items-center gap-2 text-sm text-slate-700 cursor-pointer">
+                            <input type="radio" name="jenis_peserta" value="Mahasiswa" {{ old('jenis_peserta') == 'Mahasiswa' ? 'checked' : '' }} required class="text-teal-600 focus:ring-teal-500"> Mahasiswa
+                        </label>
+                        <label class="flex items-center gap-2 text-sm text-slate-700 cursor-pointer">
+                            <input type="radio" name="jenis_peserta" value="Umum" {{ old('jenis_peserta') == 'Umum' ? 'checked' : '' }} class="text-teal-600 focus:ring-teal-500"> Umum
+                        </label>
+                        <label class="flex items-center gap-2 text-sm text-slate-700 cursor-pointer">
+                            <input type="radio" name="jenis_peserta" value="Guru" {{ old('jenis_peserta') == 'Guru' ? 'checked' : '' }} class="text-teal-600 focus:ring-teal-500"> Guru / Dosen
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Minat Tambahan (Checkbox Tambahan) -->
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Minat Tambahan (Opsional)</label>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                        <label class="flex items-center gap-2 text-xs text-slate-700 bg-white p-3 rounded-xl border border-slate-200 cursor-pointer hover:border-teal-400">
+                            <input type="checkbox" name="minat[]" value="UI/UX" class="rounded text-teal-600 focus:ring-teal-500"> UI/UX Design
+                        </label>
+                        <label class="flex items-center gap-2 text-xs text-slate-700 bg-white p-3 rounded-xl border border-slate-200 cursor-pointer hover:border-teal-400">
+                            <input type="checkbox" name="minat[]" value="Database" class="rounded text-teal-600 focus:ring-teal-500"> Database
+                        </label>
+                        <label class="flex items-center gap-2 text-xs text-slate-700 bg-white p-3 rounded-xl border border-slate-200 cursor-pointer hover:border-teal-400">
+                            <input type="checkbox" name="minat[]" value="Backend" class="rounded text-teal-600 focus:ring-teal-500"> Backend
+                        </label>
+                        <label class="flex items-center gap-2 text-xs text-slate-700 bg-white p-3 rounded-xl border border-slate-200 cursor-pointer hover:border-teal-400">
+                            <input type="checkbox" name="minat[]" value="Frontend" class="rounded text-teal-600 focus:ring-teal-500"> Frontend
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Catatan Tambahan (Textarea) -->
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Catatan / Motivasi Mengikuti Kursus</label>
+                    <textarea name="catatan" rows="3" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" placeholder="Tuliskan catatan singkat atau harapan Anda...">{{ old('catatan') }}</textarea>
+                </div>
+
+                <!-- Kotak Informasi Ketersediaan (Elemen Estetik Tambahan) -->
+                <div class="p-4 rounded-xl bg-teal-50 border border-teal-200 text-teal-800 text-xs flex items-center gap-3">
+                    <i class="fa-solid fa-circle-info text-teal-600 text-base"></i>
+                    <span>Sistem mendeteksi sisa kuota kursus otomatis aktif secara *real-time* demi kenyamanan belajar Anda.</span>
+                </div>
+
+                <!-- Tombol Submit -->
                 <div class="pt-4">
                     <button type="submit" class="w-full py-3.5 px-6 rounded-xl bg-teal-700 text-white font-semibold text-sm shadow-lg shadow-teal-700/25 hover:bg-teal-800 active:scale-95 transition-all">
-                        Lanjutkan Pendaftaran <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
+                        Kirim Pendaftaran <i class="fa-solid fa-paper-plane ml-2 text-xs"></i>
                     </button>
                 </div>
             </form>

@@ -37,10 +37,18 @@ class EnrollmentController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'min:3', 'max:100'],
             'email' => ['required', 'email'],
+            'telepon' => ['required', 'string'],
+            'prodi' => ['nullable', 'string'],
+            'course' => ['required', 'string'],
+            'metode' => ['required', 'string'],
+            'jenis_peserta' => ['required', 'string'],
+            'minat' => ['nullable', 'array'],
+            'catatan' => ['nullable', 'string'],
             'course_id' => ['required', 'integer'],
             'profession' => ['required', 'string'],
             'learning_mode' => ['required', 'string'],
             'facilities' => ['nullable', 'array']
+
         ]);
 
         return back()
