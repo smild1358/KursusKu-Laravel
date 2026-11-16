@@ -24,3 +24,4 @@ Route::get('/registration', function () {
 })->name('registration');
 
 Route::post('/enrollment/preview', [EnrollmentController::class, 'preview'])->name('enrollments.preview');
+Route::resource('courses', CourseController::class);
