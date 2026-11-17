@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Manajemen Data Pendaftaran - KursusKu</title>
+    <title>Daftar Kursus - KursusKu</title>
     
     <!-- Font & Icon -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -75,14 +75,14 @@
                 <!-- Navigation Desktop -->
                 <nav class="hidden lg:flex items-center space-x-1" aria-label="Navigasi utama">
                     <a href="{{ route('home') }}" class="px-3.5 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-brand-700 hover:bg-slate-100/80 transition-all">Beranda</a>
-                    <a href="{{ route('registrations.index') }}" class="px-3.5 py-2 rounded-lg text-sm font-semibold text-brand-700 bg-brand-50/80">Data Pendaftar</a>
+                    <a href="{{ route('courses.index') }}" class="px-3.5 py-2 rounded-lg text-sm font-semibold text-brand-700 bg-brand-50/80">Daftar Kursus</a>
                 </nav>
 
                 <!-- Action Button -->
                 <div class="hidden lg:flex items-center gap-3">
-                    <a href="{{ route('enrollments.create') }}" class="relative inline-flex items-center justify-center px-5 py-2.5 text-sm font-bold text-white bg-gradient-to-r from-brand-700 to-brand-600 rounded-xl shadow-md shadow-brand-700/20 hover:shadow-lg hover:shadow-brand-700/30 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200">
+                    <a href="{{ route('courses.create') }}" class="relative inline-flex items-center justify-center px-5 py-2.5 text-sm font-bold text-white bg-gradient-to-r from-brand-700 to-brand-600 rounded-xl shadow-md shadow-brand-700/20 hover:shadow-lg hover:shadow-brand-700/30 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200">
                         <i class="fa-solid fa-plus mr-2 text-xs"></i>
-                        <span>Tambah Data</span>
+                        <span>Tambah Kursus</span>
                     </a>
                 </div>
 
@@ -96,22 +96,22 @@
         <!-- Mobile Menu Dropdown -->
         <div id="mobile-menu" class="hidden lg:hidden border-b border-slate-200 bg-white/95 backdrop-blur-md px-4 pt-2 pb-6 space-y-2">
             <a href="{{ route('home') }}" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-600 hover:bg-slate-50">Beranda</a>
-            <a href="{{ route('registrations.index') }}" class="block px-3 py-2 rounded-lg text-base font-semibold text-brand-700 bg-brand-50">Data Pendaftar</a>
-            <a href="{{ route('enrollments.create') }}" class="block w-full text-center mt-4 px-5 py-3 text-base font-bold text-white bg-brand-700 rounded-xl shadow-md">Tambah Data</a>
+            <a href="{{ route('courses.index') }}" class="block px-3 py-2 rounded-lg text-base font-semibold text-brand-700 bg-brand-50">Daftar Kursus</a>
+            <a href="{{ route('courses.create') }}" class="block w-full text-center mt-4 px-5 py-3 text-base font-bold text-white bg-brand-700 rounded-xl shadow-md">Tambah Kursus</a>
         </div>
     </header>
 
-    <!-- KONTEN UTAMA TABEL -->
+    <!-- KONTEN UTAMA TABEL KURSUS -->
     <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-16 w-full">
         
         <div class="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
-                <span class="text-brand-600 font-bold text-sm tracking-wider uppercase">Modul Database</span>
-                <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight mt-1">Data Pendaftar Kursus</h1>
-                <p class="text-slate-500 text-sm mt-1">Daftar lengkap seluruh peserta pelatihan yang terdaftar menggunakan Eloquent ORM.</p>
+                <span class="text-brand-600 font-bold text-sm tracking-wider uppercase">Modul Database &amp; CRUD</span>
+                <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight mt-1">Daftar Kursus Pilihan</h1>
+                <p class="text-slate-500 text-sm mt-1">Kelola data program pelatihan dan kursus secara dinamis menggunakan Eloquent ORM.</p>
             </div>
-            <a href="{{ route('enrollments.create') }}" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-brand-700 text-white font-bold text-sm shadow-lg shadow-brand-700/20 hover:bg-brand-800 transition-all">
-                <i class="fa-solid fa-plus text-xs"></i> Tambah Data Baru
+            <a href="{{ route('courses.create') }}" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-brand-700 text-white font-bold text-sm shadow-lg shadow-brand-700/20 hover:bg-brand-800 transition-all">
+                <i class="fa-solid fa-plus text-xs"></i> Tambah Kursus Baru
             </a>
         </div>
 
@@ -129,46 +129,52 @@
                 <table class="w-full text-left border-collapse">
                     <thead>
                         <tr class="bg-slate-50/80 text-slate-500 uppercase text-xs tracking-wider border-b border-slate-200">
-                            <th class="py-4 px-6 font-bold">No</th>
-                            <th class="py-4 px-6 font-bold">Nama Peserta</th>
-                            <th class="py-4 px-6 font-bold">Kontak</th>
-                            <th class="py-4 px-6 font-bold">Program Kursus</th>
-                            <th class="py-4 px-6 font-bold">Kategori &amp; Biaya</th>
+                            <th class="py-4 px-6 font-bold">Kode</th>
+                            <th class="py-4 px-6 font-bold">Nama Kursus</th>
+                            <th class="py-4 px-6 font-bold">Biaya</th>
+                            <th class="py-4 px-6 font-bold">Kuota</th>
+                            <th class="py-4 px-6 font-bold">Mulai</th>
+                            <th class="py-4 px-6 font-bold">Status</th>
                             <th class="py-4 px-6 font-bold text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100 text-sm">
-                        @forelse ($registrations as $index => $reg)
+                        @forelse ($courses as $course)
                             <tr class="hover:bg-teal-50/40 transition-colors">
-                                <td class="py-4 px-6 font-semibold text-slate-500">{{ $index + 1 }}</td>
+                                <td class="py-4 px-6 font-mono font-bold text-slate-700 text-xs">{{ $course->code }}</td>
                                 <td class="py-4 px-6">
-                                    <div class="font-bold text-slate-900">{{ $reg->full_name }}</div>
-                                    <div class="text-xs text-slate-400">{{ $reg->email }}</div>
+                                    <div class="font-bold text-slate-900">{{ $course->name }}</div>
+                                    <div class="text-xs text-slate-400 truncate max-w-xs">{{ $course->description }}</div>
+                                </td>
+                                <td class="py-4 px-6 text-slate-700 font-mono font-bold">
+                                    Rp {{ number_format($course->fee, 0, ',', '.') }}
                                 </td>
                                 <td class="py-4 px-6 text-slate-600">
-                                    <i class="fa-brands fa-whatsapp text-emerald-600 mr-1"></i> {{ $reg->phone }}
+                                    {{ $course->quota }} Peserta
+                                </td>
+                                <td class="py-4 px-6 text-slate-600 text-xs font-medium">
+                                    {{ optional($course->start_date)->format('d/m/Y') }}
                                 </td>
                                 <td class="py-4 px-6">
-                                    <span class="px-3 py-1 rounded-full text-xs font-semibold bg-brand-50 text-brand-700 border border-brand-200">
-                                        {{ $reg->course_name }}
+                                    <span class="px-3 py-1 rounded-full text-xs font-semibold 
+                                        @if($course->status === 'open') bg-emerald-50 text-emerald-700 border border-emerald-200 
+                                        @elseif($course->status === 'draft') bg-amber-50 text-amber-700 border border-amber-200 
+                                        @else bg-rose-50 text-rose-700 border border-rose-200 @endif">
+                                        {{ ucfirst($course->status) }}
                                     </span>
-                                </td>
-                                <td class="py-4 px-6">
-                                    <div class="text-xs font-semibold text-slate-700">{{ $reg->participant_type }}</div>
-                                    <div class="text-brand-700 font-mono font-bold">Rp {{ number_format($reg->total_fee, 0, ',', '.') }}</div>
                                 </td>
                                 <td class="py-4 px-6 text-center">
                                     <div class="inline-flex items-center gap-2">
                                         <!-- Detail -->
-                                        <a href="{{ route('registrations.show', $reg->id) }}" class="w-8 h-8 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center hover:bg-sky-600 hover:text-white transition-all shadow-sm" title="Detail">
+                                        <a href="{{ route('courses.show', $course) }}" class="w-8 h-8 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center hover:bg-sky-600 hover:text-white transition-all shadow-sm" title="Detail">
                                             <i class="fa-solid fa-eye text-xs"></i>
                                         </a>
                                         <!-- Edit -->
-                                        <a href="{{ route('registrations.edit', $reg->id) }}" class="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center hover:bg-amber-600 hover:text-white transition-all shadow-sm" title="Edit">
+                                        <a href="{{ route('courses.edit', $course) }}" class="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center hover:bg-amber-600 hover:text-white transition-all shadow-sm" title="Edit">
                                             <i class="fa-solid fa-pen-to-square text-xs"></i>
                                         </a>
                                         <!-- Delete -->
-                                        <form action="{{ route('registrations.destroy', $reg->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
+                                        <form action="{{ route('courses.destroy', $course) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus data kursus ini?')">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="w-8 h-8 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center hover:bg-rose-600 hover:text-white transition-all shadow-sm" title="Hapus">
@@ -180,12 +186,12 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="py-16 text-center text-slate-400">
+                                <td colspan="7" class="py-16 text-center text-slate-400">
                                     <div class="w-16 h-16 mx-auto bg-slate-100 text-slate-400 rounded-2xl flex items-center justify-center text-2xl mb-3">
                                         <i class="fa-solid fa-folder-open"></i>
                                     </div>
-                                    <p class="font-semibold text-slate-700">Belum ada data pendaftaran yang tersimpan.</p>
-                                    <p class="text-xs text-slate-400 mt-1">Silakan tambahkan data baru melalui tombol di atas.</p>
+                                    <p class="font-semibold text-slate-700">Belum ada data kursus yang tersimpan.</p>
+                                    <p class="text-xs text-slate-400 mt-1">Silakan tambahkan data kursus baru melalui tombol di atas.</p>
                                 </td>
                             </tr>
                         @endforelse
@@ -216,7 +222,7 @@
                     <h4 class="text-white text-sm font-bold uppercase tracking-wider mb-4">Navigasi Utama</h4>
                     <ul class="space-y-2.5 text-sm">
                         <li><a href="{{ route('home') }}" class="hover:text-brand-500 transition">Beranda</a></li>
-                        <li><a href="{{ route('registrations.index') }}" class="hover:text-brand-500 transition">Data Pendaftar</a></li>
+                        <li><a href="{{ route('courses.index') }}" class="hover:text-brand-500 transition">Daftar Kursus</a></li>
                     </ul>
                 </div>
 

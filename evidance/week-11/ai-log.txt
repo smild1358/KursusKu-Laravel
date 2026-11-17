@@ -1,0 +1,30 @@
+================================================================================
+LOG PENGGUNAAN AI — PRAKTIKUM MINGGU 11 (CRUD LANJUTAN & FORM REQUEST)
+================================================================================
+Mahasiswa  : RAHMAD ILLAHI
+NIM        : 2524215
+Kelas      : PTIK 5G (Pemrograman Web III)
+Kampus     : UIN SMDD Bukittinggi
+Proyek     : KursusKu Laravel Web Application
+
+--------------------------------------------------------------------------------
+1. TUJUAN: Meminta bantuan menyusun struktur Form Request yang terisolasi.
+   - Prompt   : "Bagaimana cara membuat StoreCourseRequest dan UpdateCourseRequest yang baik dan benar di Laravel 10?"
+   - Saran AI : Menganjurkan pemisahan logika validasi dari Controller dengan artisan command make:request, serta menerapkan aturan validasi ketat pada method rules().
+   - Verifikasi: Pengujian input form di browser menunjukkan validasi berjalan otomatis sebelum mencapai database.
+
+2. TUJUAN: Mengatasi kendala Exception saat Route Model Binding mengarah ke halaman edit.
+   - Prompt   : "Kenapa error view [courses.edit] not found muncul saat tombol edit diklik?"
+   - Saran AI : Menyarankan untuk memeriksa struktur direktori views dan memastikan file edit.blade.php berada di dalam folder resources/views/courses/.
+   - Verifikasi: File direktori diperbaiki, halaman edit terbuka sempurna dengan data lama terisi.
+
+3. TUJUAN: Menerapkan fungsi old() agar form edit mempertahankan data input sebelumnya.
+   - Prompt   : "Bagaimana cara memastikan data lama muncul otomatis di dalam input form edit?"
+   - Saran AI : Menggunakan helper old('nama_field', $course->nama_field) pada atribut value dan textarea.
+   - Verifikasi: Data lama tampil rapi di form edit dan siap dimodifikasi.
+
+4. TUJUAN: Menyelesaikan kendala Unique Rule saat proses Update data kursus.
+   - Prompt   : "Kenapa saat mengedit data kursus tapi kode kursus tidak diubah, muncul error duplikat unique?"
+   - Saran AI : Menambahkan aturan pengecualian ID saat update menggunakan Rule::unique('courses', 'code')->ignore($courseId) agar validasi mengabaikan record milik data itu sendiri.
+   - Verifikasi: Proses update data berhasil disimpan tanpa kendala duplikasi kode.
+================================================================================

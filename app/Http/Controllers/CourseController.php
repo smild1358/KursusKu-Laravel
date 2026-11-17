@@ -11,32 +11,82 @@ use Illuminate\Http\Request;
 class CourseController extends Controller
 {
     // Menampilkan halaman utama (Landing Page)
-    public function index() 
+    public function home() 
     {
         $courses = Course::latest()->get();
         return view('welcome', compact('courses'));
     }
 
-    // Menampilkan daftar data pendaftaran (Index / Tabel CRUD)
+    // Menampilkan daftar data Kursus (Modul Pertemuan 10 - CRUD Course)
+    public function index() 
+    {
+        $courses = Course::latest()->get();
+        return view('courses.index', compact('courses'));
+    }
+
+    // Menampilkan form tambah Course baru
+    public function create() 
+    {
+        return view('courses.create');
+    }
+
+    // Menyimpan data Course baru dengan Form Request
+    public function store(StoreCourseRequest $request) 
+    {
+        Course::create($request->validated());
+
+        return redirect()->route('courses.index')
+            ->with('success', 'Yeay! Data kursus berhasil ditambahkan secara profesional.');
+    }
+
+    // Menampilkan detail Course (Route Model Binding)
+    public function show(Course $course)
+    {
+        return view('courses.show', compact('course'));
+    }
+
+    // Menampilkan form edit Course
+    public function edit(Course $course)
+    {
+        return view('courses.edit', compact('course'));
+    }
+
+    // Mengupdate Course menggunakan Form Request & Route Model Binding
+    public function update(UpdateCourseRequest $request, Course $course)
+    {
+        $course->update($request->validated());
+
+        return redirect()->route('courses.index')
+            ->with('success', 'Data kursus berhasil diperbarui!');
+    }
+
+    // Menghapus Course (Route Model Binding)
+    public function destroy(Course $course)
+    {
+        $course->delete();
+
+        return redirect()->route('courses.index')
+            ->with('success', 'Data kursus berhasil dihapus dari sistem.');
+    }
+
+
+    // ==========================================
+    // CONTROLLER PENDUKUNG: REGISTRATION (TUGAS SEBELUMNYA)
+    // ==========================================
+
     public function listData() 
     {
         $registrations = Registration::latest()->get();
         return view('registrations.index', compact('registrations'));
     }
 
-    // Menampilkan form tambah pendaftaran
-    public function create() 
+    public function createRegistration() 
     {
         return view('registrations.create');
     }
 
-    // Menyimpan data baru dengan Server-side Validation & Eloquent
-    public function store(StoreCourseRequest $request) 
+    public function storeRegistration(Request $request) 
     {
-        // Menyimpan data course dari Form Request
-        Course::create($request->validated());
-
-        // Validasi dan penyimpanan data pendaftaran beserta kalkulasi diskon otomatis
         $validated = $request->validate([
             'full_name'        => 'required|string|max:255',
             'email'            => 'required|email|unique:registrations,email',
@@ -46,7 +96,6 @@ class CourseController extends Controller
             'learning_mode'    => 'required|string',
         ]);
 
-        // Kalkulasi Diskon Otomatis
         $baseFee = 500000;
         $discount = match($validated['participant_type']) {
             'Mahasiswa' => 0.20,
@@ -54,42 +103,26 @@ class CourseController extends Controller
             default     => 0.05,
         };
 
-        // Memperbaiki formula perhitungan total_fee agar tidak error
         $validated['total_fee'] = $baseFee - ($baseFee * $discount);
 
         Registration::create($validated);
 
         return redirect()->route('registrations.index')
-            ->with('success', 'Yeay! Data pendaftaran berhasil ditambahkan secara profesional.');
+            ->with('success', 'Data pendaftaran berhasil ditambahkan!');
     }
 
-    // Menampilkan detail data pendaftaran berdasarkan ID
     public function showRegistration($id) 
     {
         $registration = Registration::findOrFail($id);
         return view('registrations.show', compact('registration'));
     }
 
-    // Menampilkan detail Course (Route Model Binding)
-    public function show(Course $course)
-    {
-        return view('courses.show', compact('course'));
-    }
-
-    // Menampilkan form edit data pendaftaran berdasarkan ID
     public function editRegistration($id) 
     {
         $registration = Registration::findOrFail($id);
         return view('registrations.edit', compact('registration'));
     }
 
-    // Menampilkan form edit Course (Route Model Binding)
-    public function edit(Course $course)
-    {
-        return view('courses.edit', compact('course'));
-    }
-
-    // Mengupdate data pendaftaran
     public function updateRegistration(Request $request, $id) 
     {
         $registration = Registration::findOrFail($id);
@@ -110,7 +143,6 @@ class CourseController extends Controller
             default     => 0.05,
         };
 
-        // Memperbaiki formula perhitungan total_fee
         $validated['total_fee'] = $baseFee - ($baseFee * $discount);
 
         $registration->update($validated);
@@ -119,35 +151,15 @@ class CourseController extends Controller
             ->with('success', 'Data pendaftaran berhasil diperbarui!');
     }
 
-    // Mengupdate Course menggunakan Form Request & Route Model Binding
-    public function update(UpdateCourseRequest $request, Course $course)
-    {
-        $course->update($request->validated());
-
-        return to_route('courses.show', $course)
-            ->with('success', 'Kursus berhasil diperbarui.');
-    }
-
-    // Menghapus data pendaftaran berdasarkan ID
     public function destroyRegistration($id) 
     {
         $registration = Registration::findOrFail($id);
         $registration->delete();
 
         return redirect()->route('registrations.index')
-            ->with('success', 'Data berhasil dihapus dari sistem.');
+            ->with('success', 'Data pendaftaran berhasil dihapus.');
     }
 
-    // Menghapus Course (Route Model Binding)
-    public function destroy(Course $course)
-    {
-        $course->delete();
-
-        return to_route('courses.index')
-            ->with('success', 'Kursus berhasil dihapus.');
-    }
-
-    // (Opsional) Method riwayat lama diarahkan ke index data
     public function history() 
     {
         return redirect()->route('registrations.index');
