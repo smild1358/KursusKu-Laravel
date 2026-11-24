@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ERD KursusKu - Relational Core v1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
+                    colors: { brand: { 50: '#f0fdfa', 100: '#ccfbf1', 500: '#14b8a6', 600: '#0d9488', 700: '#0f766e', 800: '#115e59', 900: '#134e4a' } }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gradient-to-br from-slate-50 via-teal-50/30 to-slate-100 min-h-screen flex flex-col items-center justify-center p-8 text-slate-800">
+
+    <div class="max-w-5xl w-full bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl border border-teal-100 p-10">
+        <!-- Header Diagram -->
+        <div class="text-center mb-12">
+            <span class="px-3 py-1 rounded-full bg-brand-50 text-brand-700 border border-brand-200 text-xs font-bold uppercase tracking-widest">Entity Relationship Diagram</span>
+            <h1 class="text-3xl font-extrabold text-slate-900 mt-2 tracking-tight">ERD Database Relasional — KursusKu</h1>
+            <p class="text-sm text-slate-500 mt-1">Arsitektur 3 Entitas, 2 Foreign Key (ON DELETE CASCADE), &amp; Composite Unique Constraint[cite: 21, 28]</p>
+        </div>
+
+        <!-- Kanvas Entitas -->
+        <div class="relative grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+            
+            <!-- ENTITAS 1: COURSES -->
+            <div class="rounded-2xl overflow-hidden shadow-lg border border-slate-200 bg-white">
+                <div class="bg-gradient-to-r from-slate-800 to-slate-900 px-5 py-3.5 text-white flex items-center justify-between">
+                    <span class="font-extrabold tracking-wide text-sm"><i class="fa-solid fa-book-open mr-2 text-teal-400"></i>COURSES</span>
+                    <span class="text-[10px] bg-slate-700 px-2 py-0.5 rounded font-mono">Master</span>
+                </div>
+                <div class="divide-y divide-slate-100 text-xs font-mono">
+                    <div class="px-5 py-2.5 flex justify-between bg-amber-50/50">
+                        <span class="font-bold text-amber-700"><i class="fa-solid fa-key mr-1.5"></i>PK id</span>
+                        <span class="text-slate-400">bigint</span>
+                    </div>
+                    <div class="px-5 py-2.5 flex justify-between bg-teal-50/40">
+                        <span class="font-bold text-teal-700"><i class="fa-solid fa-fingerprint mr-1.5"></i>UQ code</span>
+                        <span class="text-slate-400">varchar(20)</span>
+                    </div>
+                    <div class="px-5 py-2.5 flex justify-between">
+                        <span class="text-slate-700">name</span>
+                        <span class="text-slate-400">varchar(120)</span>
+                    </div>
+                    <div class="px-5 py-2.5 flex justify-between">
+                        <span class="text-slate-700">fee</span>
+                        <span class="text-slate-400">integer</span>
+                    </div>
+                    <div class="px-5 py-2.5 flex justify-between">
+                        <span class="text-slate-700">quota</span>
+                        <span class="text-slate-400">integer</span>
+                    </div>
+                    <div class="px-5 py-2.5 flex justify-between">
+                        <span class="text-slate-700">start_date</span>
+                        <span class="text-slate-400">date</span>
+                    </div>
+                    <div class="px-5 py-2.5 flex justify-between">
+                        <span class="text-slate-700">status</span>
+                        <span class="text-slate-400">varchar(20)</span>
+                    </div>
+                    <div class="px-5 py-2.5 flex justify-between text-slate-400">
+                        <span>timestamps</span>
+                        <span>created/updated</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ENTITAS 2: ENROLLMENTS (PIVOT DENGAN PERILAKU) -->
+            <div class="rounded-2xl overflow-hidden shadow-xl border-2 border-brand-500 bg-white md:mt-16 relative">
+                <div class="bg-gradient-to-r from-brand-700 to-brand-600 px-5 py-3.5 text-white flex items-center justify-between">
+                    <span class="font-extrabold tracking-wide text-sm"><i class="fa-solid fa-link mr-2 text-teal-200"></i>ENROLLMENTS</span>
+                    <span class="text-[10px] bg-brand-900/50 px-2 py-0.5 rounded font-mono">Junction</span>
+                </div>
+                <div class="divide-y divide-slate-100 text-xs font-mono">
+                    <div class="px-5 py-2.5 flex justify-between bg-amber-50/50">
+                        <span class="font-bold text-amber-700"><i class="fa-solid fa-key mr-1.5"></i>PK id</span>
+                        <span class="text-slate-400">bigint</span>
+                    </div>
+                    <div class="px-5 py-2.5 flex justify-between bg-rose-50/50">
+                        <span class="font-bold text-rose-700"><i class="fa-solid fa-arrow-right-to-bracket mr-1.5"></i>FK participant_id</span>
+                        <span class="text-slate-400">cascade</span>
+                    </div>
+                    <div class="px-5 py-2.5 flex justify-between bg-rose-50/50">
+                        <span class="font-bold text-rose-700"><i class="fa-solid fa-arrow-right-to-bracket mr-1.5"></i>FK course_id</span>
+                        <span class="text-slate-400">cascade</span>
+                    </div>
+                    <div class="px-5 py-2.5 flex justify-between">
+                        <span class="text-slate-700">status</span>
+                        <span class="text-slate-400">'registered'</span>
+                    </div>
+                    <div class="px-5 py-2.5 flex justify-between text-slate-400">
+                        <span>timestamps</span>
+                        <span>created/updated</span>
+                    </div>
+                    <div class="px-5 py-3 bg-teal-50 text-brand-800 font-bold text-[11px] flex items-center gap-1.5">
+                        <i class="fa-solid fa-shield-halved text-brand-600"></i>
+                        <span>UQ (participant_id, course_id)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ENTITAS 3: PARTICIPANTS -->
+            <div class="rounded-2xl overflow-hidden shadow-lg border border-slate-200 bg-white">
+                <div class="bg-gradient-to-r from-teal-800 to-teal-700 px-5 py-3.5 text-white flex items-center justify-between">
+                    <span class="font-extrabold tracking-wide text-sm"><i class="fa-solid fa-users mr-2 text-teal-200"></i>PARTICIPANTS</span>
+                    <span class="text-[10px] bg-teal-950/50 px-2 py-0.5 rounded font-mono">Master</span>
+                </div>
+                <div class="divide-y divide-slate-100 text-xs font-mono">
+                    <div class="px-5 py-2.5 flex justify-between bg-amber-50/50">
+                        <span class="font-bold text-amber-700"><i class="fa-solid fa-key mr-1.5"></i>PK id</span>
+                        <span class="text-slate-400">bigint</span>
+                    </div>
+                    <div class="px-5 py-2.5 flex justify-between">
+                        <span class="text-slate-700">name</span>
+                        <span class="text-slate-400">varchar(100)</span>
+                    </div>
+                    <div class="px-5 py-2.5 flex justify-between bg-teal-50/40">
+                        <span class="font-bold text-teal-700"><i class="fa-solid fa-fingerprint mr-1.5"></i>UQ email</span>
+                        <span class="text-slate-400">varchar(120)</span>
+                    </div>
+                    <div class="px-5 py-2.5 flex justify-between">
+                        <span class="text-slate-700">phone</span>
+                        <span class="text-slate-400">nullable</span>
+                    </div>
+                    <div class="px-5 py-2.5 flex justify-between text-slate-400">
+                        <span>timestamps</span>
+                        <span>created/updated</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Indikator Kardinalitas & Legenda -->
+        <div class="mt-10 pt-6 border-t border-slate-200 flex flex-wrap justify-between items-center gap-4 text-xs text-slate-600">
+            <div class="flex flex-wrap gap-4 font-semibold">
+                <span class="px-3 py-1.5 rounded-lg bg-slate-100 border border-slate-200">COURSES (1) &rarr; (*) ENROLLMENTS</span>
+                <span class="px-3 py-1.5 rounded-lg bg-slate-100 border border-slate-200">PARTICIPANTS (1) &rarr; (*) ENROLLMENTS</span>
+            </div>
+            <div class="font-mono text-[11px] text-slate-500">
+                <strong>PK</strong>: Primary Key | <strong>FK</strong>: Foreign Key | <strong>UQ</strong>: Unique Index[cite: 45]
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
