@@ -129,14 +129,7 @@ class CourseController extends Controller
             'learning_mode'    => 'required|string',
         ]);
 
-        $baseFee = 500000;
-        $discount = match ($validated['participant_type']) {
-            'Mahasiswa' => 0.20,
-            'Guru'      => 0.15,
-            default     => 0.05,
-        };
-
-        $validated['total_fee'] = $baseFee - ($baseFee * $discount);
+        $validated['total_fee'] = $this->calculateRegistrationFee($validated['participant_type']);
 
         Registration::create($validated);
 
@@ -171,14 +164,7 @@ class CourseController extends Controller
             'learning_mode'    => 'required|string',
         ]);
 
-        $baseFee = 500000;
-        $discount = match ($validated['participant_type']) {
-            'Mahasiswa' => 0.20,
-            'Guru'      => 0.15,
-            default     => 0.05,
-        };
-
-        $validated['total_fee'] = $baseFee - ($baseFee * $discount);
+        $validated['total_fee'] = $this->calculateRegistrationFee($validated['participant_type']);
 
         $registration->update($validated);
 
@@ -198,5 +184,18 @@ class CourseController extends Controller
     public function history()
     {
         return redirect()->route('registrations.index');
+    }
+
+    // Helper perhitungan biaya pendaftaran agar konsisten antara store & update registration
+    private function calculateRegistrationFee(string $participantType): float
+    {
+        $baseFee = 500000;
+        $discount = match ($participantType) {
+            'Mahasiswa' => 0.20,
+            'Guru'      => 0.15,
+            default     => 0.05,
+        };
+
+        return $baseFee - ($baseFee * $discount);
     }
 }

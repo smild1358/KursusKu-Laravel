@@ -3,22 +3,24 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Daftar Kursus - KursusKu</title>
-    
+    <title>Daftar &amp; Pencarian Kursus — KursusKu Laravel</title>
+
     <!-- Font & Icon -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Tailwind CSS CDN -->
+
+    <!-- Tailwind CSS & jQuery CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
                         sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
                     },
                     colors: {
                         brand: {
@@ -46,14 +48,14 @@
             -webkit-backdrop-filter: blur(12px);
         }
         .glass-card {
-            background: rgba(255, 255, 255, 0.92);
+            background: rgba(255, 255, 255, 0.94);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(20, 184, 166, 0.2);
+            border: 1px solid rgba(20, 184, 166, 0.22);
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-slate-50 via-teal-50/20 to-slate-100 text-slate-800 antialiased min-h-screen flex flex-col justify-between font-sans selection:bg-brand-500 selection:text-white">
+<body class="bg-gradient-to-br from-slate-50 via-teal-50/30 to-slate-100 text-slate-800 antialiased min-h-screen flex flex-col justify-between font-sans selection:bg-brand-500 selection:text-white">
 
     <!-- SITE HEADER & NAVBAR -->
     <header class="fixed top-0 left-0 right-0 z-50 glass-nav border-b border-slate-200/80 transition-all duration-300">
@@ -68,26 +70,27 @@
                         <span class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-brand-900 via-brand-700 to-brand-600 bg-clip-text text-transparent">
                             KursusKu
                         </span>
-                        <span class="block text-[10px] uppercase tracking-widest text-slate-400 font-semibold">Tugas 5 CRUD Lanjutan</span>
+                        <span class="block text-[10px] uppercase tracking-widest text-slate-400 font-semibold">Minggu 13 — Data Discovery &amp; Ajax</span>
                     </div>
                 </a>
 
                 <!-- Navigation Desktop -->
                 <nav class="hidden lg:flex items-center space-x-1" aria-label="Navigasi utama">
-                    <a href="{{ route('home') }}" class="px-3.5 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-brand-700 hover:bg-slate-100/80 transition-all">Beranda</a>
-                    <a href="{{ route('courses.index') }}" class="px-3.5 py-2 rounded-lg text-sm font-semibold text-brand-700 bg-brand-50/80">Daftar Kursus</a>
+                    <a href="{{ route('home') }}" class="px-3.5 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-brand-700 hover:bg-brand-50/60 transition-all">Beranda</a>
+                    <a href="{{ route('courses.index') }}" class="px-3.5 py-2 rounded-lg text-sm font-semibold text-brand-700 bg-brand-50 border border-brand-100">Daftar Kursus</a>
+                    <a href="{{ route('enrollments.index') }}" class="px-3.5 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-brand-700 hover:bg-brand-50/60 transition-all">Laporan Enrollment</a>
                 </nav>
 
-                <!-- Action Button -->
+                <!-- Action Button Desktop -->
                 <div class="hidden lg:flex items-center gap-3">
-                    <a href="{{ route('courses.create') }}" class="relative inline-flex items-center justify-center px-5 py-2.5 text-sm font-bold text-white bg-gradient-to-r from-brand-700 to-brand-600 rounded-xl shadow-md shadow-brand-700/20 hover:shadow-lg hover:shadow-brand-700/30 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200">
+                    <a href="{{ route('courses.create') }}" class="relative inline-flex items-center justify-center px-5 py-2.5 text-sm font-bold text-white bg-gradient-to-r from-brand-700 to-brand-600 rounded-xl shadow-md shadow-brand-700/20 hover:shadow-lg hover:shadow-glow hover:scale-[1.02] active:scale-[0.98] transition-all duration-200">
                         <i class="fa-solid fa-plus mr-2 text-xs"></i>
                         <span>Tambah Kursus</span>
                     </a>
                 </div>
 
                 <!-- Mobile Menu Button -->
-                <button id="mobile-menu-btn" class="lg:hidden p-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none">
+                <button id="mobile-menu-btn" type="button" class="lg:hidden p-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none" aria-label="Buka menu navigasi">
                     <i class="fa-solid fa-bars text-xl"></i>
                 </button>
             </div>
@@ -97,108 +100,121 @@
         <div id="mobile-menu" class="hidden lg:hidden border-b border-slate-200 bg-white/95 backdrop-blur-md px-4 pt-2 pb-6 space-y-2">
             <a href="{{ route('home') }}" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-600 hover:bg-slate-50">Beranda</a>
             <a href="{{ route('courses.index') }}" class="block px-3 py-2 rounded-lg text-base font-semibold text-brand-700 bg-brand-50">Daftar Kursus</a>
-            <a href="{{ route('courses.create') }}" class="block w-full text-center mt-4 px-5 py-3 text-base font-bold text-white bg-brand-700 rounded-xl shadow-md">Tambah Kursus</a>
+            <a href="{{ route('enrollments.index') }}" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-600 hover:bg-slate-50">Laporan Enrollment</a>
+            <a href="{{ route('courses.create') }}" class="block w-full text-center mt-4 px-5 py-3 text-base font-bold text-white bg-brand-700 hover:bg-brand-800 rounded-xl shadow-md transition">Tambah Kursus</a>
         </div>
     </header>
 
-    <!-- KONTEN UTAMA TABEL KURSUS -->
+    <!-- KONTEN UTAMA -->
     <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-16 w-full">
-        
+
+        <!-- Header & Tombol Tambah -->
         <div class="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
-                <span class="text-brand-600 font-bold text-sm tracking-wider uppercase">Modul Database &amp; CRUD</span>
-                <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight mt-1">Daftar Kursus Pilihan</h1>
-                <p class="text-slate-500 text-sm mt-1">Kelola data program pelatihan dan kursus secara dinamis menggunakan Eloquent ORM.</p>
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-50 border border-brand-200/70 text-brand-700 text-xs font-bold uppercase tracking-wider mb-2">
+                    <i class="fa-solid fa-magnifying-glass-chart"></i> Milestone 13 — Data Discovery KursusKu
+                </div>
+                <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Katalog &amp; Manajemen Kursus</h1>
+                <p class="text-slate-500 text-sm mt-1">Pencarian real-time, filter status, dan pagination server-side dengan progressive enhancement Ajax.</p>
             </div>
-            <a href="{{ route('courses.create') }}" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-brand-700 text-white font-bold text-sm shadow-lg shadow-brand-700/20 hover:bg-brand-800 transition-all">
+            <a href="{{ route('courses.create') }}" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-brand-700 to-brand-600 hover:from-brand-800 hover:to-brand-700 text-white font-bold text-sm shadow-lg shadow-brand-700/25 transition-all shrink-0">
                 <i class="fa-solid fa-plus text-xs"></i> Tambah Kursus Baru
             </a>
         </div>
 
-        <!-- FLASH MESSAGE BERHASIL -->
+        <!-- Flash Message -->
         @if (session('success'))
-            <div class="mb-6 p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm flex items-center shadow-sm">
+            <div class="mb-6 p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm font-medium flex items-center shadow-sm">
                 <i class="fa-solid fa-circle-check text-emerald-600 text-lg mr-3"></i>
                 <span>{{ session('success') }}</span>
             </div>
         @endif
 
-        <!-- TABEL KARTU GLASSMORPHISM -->
-        <div class="glass-card rounded-3xl shadow-xl overflow-hidden border border-teal-100 bg-white">
-            <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
-                    <thead>
-                        <tr class="bg-slate-50/80 text-slate-500 uppercase text-xs tracking-wider border-b border-slate-200">
-                            <th class="py-4 px-6 font-bold">Kode</th>
-                            <th class="py-4 px-6 font-bold">Nama Kursus</th>
-                            <th class="py-4 px-6 font-bold">Biaya</th>
-                            <th class="py-4 px-6 font-bold">Kuota</th>
-                            <th class="py-4 px-6 font-bold">Mulai</th>
-                            <th class="py-4 px-6 font-bold">Status</th>
-                            <th class="py-4 px-6 font-bold text-center">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-slate-100 text-sm">
-                        @forelse ($courses as $course)
-                            <tr class="hover:bg-teal-50/40 transition-colors">
-                                <td class="py-4 px-6 font-mono font-bold text-slate-700 text-xs">{{ $course->code }}</td>
-                                <td class="py-4 px-6">
-                                    <div class="font-bold text-slate-900">{{ $course->name }}</div>
-                                    <div class="text-xs text-slate-400 truncate max-w-xs">{{ $course->description }}</div>
-                                </td>
-                                <td class="py-4 px-6 text-slate-700 font-mono font-bold">
-                                    Rp {{ number_format($course->fee, 0, ',', '.') }}
-                                </td>
-                                <td class="py-4 px-6 text-slate-600">
-                                    {{ $course->quota }} Peserta
-                                </td>
-                                <td class="py-4 px-6 text-slate-600 text-xs font-medium">
-                                    {{ optional($course->start_date)->format('d/m/Y') }}
-                                </td>
-                                <td class="py-4 px-6">
-                                    <span class="px-3 py-1 rounded-full text-xs font-semibold 
-                                        @if($course->status === 'open') bg-emerald-50 text-emerald-700 border border-emerald-200 
-                                        @elseif($course->status === 'draft') bg-amber-50 text-amber-700 border border-amber-200 
-                                        @else bg-rose-50 text-rose-700 border border-rose-200 @endif">
-                                        {{ ucfirst($course->status) }}
-                                    </span>
-                                </td>
-                                <td class="py-4 px-6 text-center">
-                                    <div class="inline-flex items-center gap-2">
-                                        <!-- Detail -->
-                                        <a href="{{ route('courses.show', $course) }}" class="w-8 h-8 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center hover:bg-sky-600 hover:text-white transition-all shadow-sm" title="Detail">
-                                            <i class="fa-solid fa-eye text-xs"></i>
-                                        </a>
-                                        <!-- Edit -->
-                                        <a href="{{ route('courses.edit', $course) }}" class="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center hover:bg-amber-600 hover:text-white transition-all shadow-sm" title="Edit">
-                                            <i class="fa-solid fa-pen-to-square text-xs"></i>
-                                        </a>
-                                        <!-- Delete -->
-                                        <form action="{{ route('courses.destroy', $course) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus data kursus ini?')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="w-8 h-8 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center hover:bg-rose-600 hover:text-white transition-all shadow-sm" title="Hapus">
-                                                <i class="fa-solid fa-trash text-xs"></i>
-                                            </button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="7" class="py-16 text-center text-slate-400">
-                                    <div class="w-16 h-16 mx-auto bg-slate-100 text-slate-400 rounded-2xl flex items-center justify-center text-2xl mb-3">
-                                        <i class="fa-solid fa-folder-open"></i>
-                                    </div>
-                                    <p class="font-semibold text-slate-700">Belum ada data kursus yang tersimpan.</p>
-                                    <p class="text-xs text-slate-400 mt-1">Silakan tambahkan data kursus baru melalui tombol di atas.</p>
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+        <!-- Dashboard Count (Tambahan Proyek Milestone 13) -->
+        @if (isset($stats))
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <div class="glass-card p-5 rounded-2xl shadow-glass bg-white flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-brand-50 text-brand-700 flex items-center justify-center text-xl border border-brand-100 shrink-0">
+                    <i class="fa-solid fa-layer-group"></i>
+                </div>
+                <div>
+                    <div class="text-xs font-bold uppercase tracking-wider text-slate-400">Total Course</div>
+                    <div class="text-2xl font-extrabold text-slate-900 font-mono">{{ $stats['total_courses'] }}</div>
+                </div>
+            </div>
+            <div class="glass-card p-5 rounded-2xl shadow-glass bg-white flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center text-xl border border-emerald-100 shrink-0">
+                    <i class="fa-solid fa-door-open"></i>
+                </div>
+                <div>
+                    <div class="text-xs font-bold uppercase tracking-wider text-slate-400">Course Open</div>
+                    <div class="text-2xl font-extrabold text-emerald-700 font-mono">{{ $stats['open_courses'] }}</div>
+                </div>
+            </div>
+            <div class="glass-card p-5 rounded-2xl shadow-glass bg-white flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-sky-50 text-sky-700 flex items-center justify-center text-xl border border-sky-100 shrink-0">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+                <div>
+                    <div class="text-xs font-bold uppercase tracking-wider text-slate-400">Participant</div>
+                    <div class="text-2xl font-extrabold text-slate-900 font-mono">{{ $stats['total_participants'] }}</div>
+                </div>
+            </div>
+            <div class="glass-card p-5 rounded-2xl shadow-glass bg-white flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center text-xl border border-amber-100 shrink-0">
+                    <i class="fa-solid fa-file-signature"></i>
+                </div>
+                <div>
+                    <div class="text-xs font-bold uppercase tracking-wider text-slate-400">Enrollment</div>
+                    <div class="text-2xl font-extrabold text-slate-900 font-mono">{{ $stats['total_enrollments'] }}</div>
+                </div>
             </div>
         </div>
+        @endif
+
+        <!-- FORM SEARCH & FILTER (GET METHOD — TETAP BEKERJA TANPA JAVASCRIPT) -->
+        <div class="glass-card p-5 rounded-3xl shadow-glass bg-white mb-6">
+            <form id="course-filter-form" method="GET" action="{{ route('courses.index') }}" class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
+                <!-- Input Search q -->
+                <div class="md:col-span-6 relative">
+                    <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-400 pointer-events-none">
+                        <i class="fa-solid fa-magnifying-glass text-sm"></i>
+                    </span>
+                    <input type="search" id="live-search" name="q" value="{{ $search ?? '' }}"
+                        class="w-full pl-11 pr-10 py-3 bg-slate-50/70 border border-slate-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500 transition"
+                        placeholder="Cari kode (misal: LRV-101) atau nama kursus...">
+                    <span id="ajax-spinner" class="hidden absolute inset-y-0 right-0 pr-3.5 flex items-center text-brand-600">
+                        <i class="fa-solid fa-circle-notch fa-spin text-sm"></i>
+                    </span>
+                </div>
+
+                <!-- Dropdown Filter Status -->
+                <div class="md:col-span-3">
+                    <select id="status-filter" name="status" class="w-full px-4 py-3 bg-slate-50/70 border border-slate-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500 transition">
+                        <option value="">Semua Status</option>
+                        <option value="open" @selected(($status ?? '') === 'open')>Open (Tersedia)</option>
+                        <option value="closed" @selected(($status ?? '') === 'closed')>Closed (Ditutup)</option>
+                        <option value="draft" @selected(($status ?? '') === 'draft')>Draft (Konsep)</option>
+                    </select>
+                </div>
+
+                <!-- Tombol Cari & Reset -->
+                <div class="md:col-span-3 flex items-center gap-2">
+                    <button type="submit" class="w-2/3 py-3 px-4 rounded-xl bg-brand-700 hover:bg-brand-800 text-white font-bold text-sm shadow-sm transition flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-search text-xs"></i> Cari
+                    </button>
+                    <a href="{{ route('courses.index') }}" class="w-1/3 py-3 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm text-center transition">
+                        Reset
+                    </a>
+                </div>
+            </form>
+            <div id="ajax-error-banner" class="hidden mt-3 p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-semibold">
+                <i class="fa-solid fa-circle-exclamation mr-1.5"></i> Gagal memuat data secara Ajax. Silakan gunakan tombol Cari.
+            </div>
+        </div>
+
+        <!-- AREA HASIL PARTIAL (TABEL + PAGINATION) -->
+        @include('courses._results')
 
     </main>
 
@@ -217,23 +233,21 @@
                         Platform edukasi berbasis web modern untuk akselerasi talenta digital Indonesia melalui kurikulum berstandar industri.
                     </p>
                 </div>
-
                 <div>
                     <h4 class="text-white text-sm font-bold uppercase tracking-wider mb-4">Navigasi Utama</h4>
                     <ul class="space-y-2.5 text-sm">
                         <li><a href="{{ route('home') }}" class="hover:text-brand-500 transition">Beranda</a></li>
                         <li><a href="{{ route('courses.index') }}" class="hover:text-brand-500 transition">Daftar Kursus</a></li>
+                        <li><a href="{{ route('enrollments.index') }}" class="hover:text-brand-500 transition">Laporan Enrollment</a></li>
                     </ul>
                 </div>
-
                 <div>
                     <h4 class="text-white text-sm font-bold uppercase tracking-wider mb-4">Tugas Praktikum</h4>
                     <ul class="space-y-2.5 text-sm">
-                        <li><span class="text-brand-400 font-medium">Tugas 5:</span> CRUD Lanjutan &amp; Eloquent</li>
+                        <li><span class="text-brand-400 font-medium">Tugas 13:</span> Pagination, Search &amp; Ajax</li>
                     </ul>
                 </div>
             </div>
-
             <div class="pt-8 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-4">
                 <p>&copy; 2026 KursusKu Laravel Platform. All rights reserved.</p>
                 <div class="flex space-x-6">
@@ -245,13 +259,64 @@
         </div>
     </footer>
 
-    <!-- Interactive Toggle Script for Mobile Menu -->
+    <!-- MOBILE MENU TOGGLE & JQUERY AJAX LIVE SEARCH (DEBOUNCE 300MS) + AJAX PAGINATION -->
     <script>
-        const btn = document.getElementById('mobile-menu-btn');
-        const menu = document.getElementById('mobile-menu');
+        document.addEventListener('DOMContentLoaded', function () {
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            if (btn && menu) {
+                btn.addEventListener('click', function () {
+                    menu.classList.toggle('hidden');
+                });
+            }
+        });
 
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
+        $(function () {
+            let searchTimer;
+
+            function loadCourses(url = "{{ route('courses.index') }}") {
+                const q = $('#live-search').val();
+                const status = $('#status-filter').val();
+
+                $('#ajax-spinner').removeClass('hidden');
+                $('#ajax-error-banner').addClass('hidden');
+
+                $.get(url, { q: q, status: status, partial: 1 })
+                    .done(function (html) {
+                        $('#course-results').replaceWith(html);
+
+                        const cleanUrl = new URL(url, window.location.origin);
+                        if (q) cleanUrl.searchParams.set('q', q); else cleanUrl.searchParams.delete('q');
+                        if (status) cleanUrl.searchParams.set('status', status); else cleanUrl.searchParams.delete('status');
+                        cleanUrl.searchParams.delete('partial');
+                        window.history.replaceState({}, '', cleanUrl.toString());
+                    })
+                    .fail(function () {
+                        $('#ajax-error-banner').removeClass('hidden');
+                    })
+                    .always(function () {
+                        $('#ajax-spinner').addClass('hidden');
+                    });
+            }
+
+            $(document).on('input', '#live-search', function () {
+                clearTimeout(searchTimer);
+                searchTimer = setTimeout(function () {
+                    loadCourses();
+                }, 300);
+            });
+
+            $(document).on('change', '#status-filter', function () {
+                loadCourses();
+            });
+
+            $(document).on('click', '#course-results .pagination-wrapper a', function (e) {
+                e.preventDefault();
+                const targetUrl = $(this).attr('href');
+                if (targetUrl) {
+                    loadCourses(targetUrl);
+                }
+            });
         });
     </script>
 </body>
