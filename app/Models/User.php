@@ -19,8 +19,16 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'username',
         'email',
         'password',
+        'role',
+        'status',
+        'phone',
+        'position',
+        'institution',
+        'address',
+        'last_login_at',
     ];
 
     /**
@@ -40,6 +48,23 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'last_login_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    /**
+     * Mengecek apakah akun pengguna memiliki peran (role) Admin.
+     */
+    public function isAdmin(): bool
+    {
+        return strtolower((string) $this->role) === 'admin';
+    }
+
+    /**
+     * Mengecek apakah status akun pengguna sedang aktif.
+     */
+    public function isActive(): bool
+    {
+        return strtolower((string) $this->status) === 'aktif';
+    }
 }

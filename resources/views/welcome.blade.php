@@ -3,12 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>KursusKu - Platform Pelatihan Digital & Sertifikasi</title>
+    <title>KursusKu - Platform Pelatihan Digital &amp; Sertifikasi</title>
     <!-- Google Fonts: Plus Jakarta Sans & Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -20,6 +20,7 @@
                 extend: {
                     fontFamily: {
                         sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
                     },
                     colors: {
                         brand: {
@@ -28,6 +29,7 @@
                             500: '#14b8a6',
                             600: '#0d9488',
                             700: '#0f766e',
+                            800: '#115e59',
                             900: '#134e4a',
                         }
                     }
@@ -39,16 +41,17 @@
         .glass-card {
             background: rgba(255, 255, 255, 0.90);
             backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(20, 184, 166, 0.15);
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col justify-between font-sans">
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col justify-between font-sans selection:bg-brand-500 selection:text-white">
 
     <!-- SITE HEADER & NAVBAR -->
     <header class="sticky top-4 z-50 mx-4 sm:mx-8 lg:mx-16">
         <nav class="glass-card shadow-lg rounded-2xl px-6 py-4 flex items-center justify-between transition-all duration-300">
-            <a href="http://kursusku.test" class="flex items-center gap-3 group">
+            <a href="{{ route('home') }}" class="flex items-center gap-3 group">
                 <div class="w-10 h-10 rounded-xl bg-teal-700 flex items-center justify-center text-white shadow-md shadow-teal-700/30 group-hover:scale-105 transition-transform">
                     <i class="fa-solid fa-graduation-cap text-lg"></i>
                 </div>
@@ -57,31 +60,80 @@
                     <span class="block text-[10px] uppercase tracking-widest text-slate-400 font-semibold">Laravel Edition</span>
                 </div>
             </a>
-            
+
             <!-- Navbar Links (Ditambahkan menu 'Media' & 'Daftar Kursus' sesuai referensi teman) -->
             <div class="hidden lg:flex items-center gap-6 font-medium text-sm text-slate-600">
-                <a href="http://kursusku.test" class="hover:text-teal-700 transition-colors">Beranda</a>
+                <a href="{{ route('home') }}" class="hover:text-teal-700 transition-colors">Beranda</a>
                 <a href="#keunggulan" class="hover:text-teal-700 transition-colors">Keunggulan</a>
                 <a href="#katalog" class="hover:text-teal-700 transition-colors">Katalog</a>
                 <a href="#pendaftaran" class="hover:text-teal-700 transition-colors">Cara Daftar</a>
                 <a href="#media" class="hover:text-teal-700 transition-colors">Media</a>
-                <a href="http://kursusku.test/registration" class="text-amber-600 font-semibold hover:text-amber-700 transition-colors">Daftar Kursus</a>
+                <a href="{{ route('registration') }}" class="text-amber-600 font-semibold hover:text-amber-700 transition-colors">Daftar Kursus</a>
                 <a href="#kontak" class="hover:text-teal-700 transition-colors">Kontak</a>
             </div>
 
-            <div class="flex items-center gap-3">
-                <a href="http://kursusku.test/registration" class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-teal-700 text-white font-semibold text-sm shadow-lg shadow-teal-700/25 hover:bg-teal-800 active:scale-95 transition-all">
+            <!-- Aksi Desktop: Login / Profil Saya + Daftar Sekarang -->
+            <div class="hidden lg:flex items-center gap-3">
+                @auth
+                    <a href="{{ route('admin.profile') }}"
+                       class="px-3.5 py-2.5 rounded-xl text-xs font-bold text-teal-800 bg-teal-50 hover:bg-teal-100 border border-teal-200/80 transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-user-check text-teal-600"></i>
+                        <span>Profil Saya</span>
+                    </a>
+                @else
+                    <a href="{{ route('login') }}"
+                       class="px-3.5 py-2.5 rounded-xl text-xs font-bold text-teal-800 bg-teal-50/90 hover:bg-teal-100 border border-teal-200/80 transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-right-to-bracket text-teal-600"></i>
+                        <span>Login</span>
+                    </a>
+                @endauth
+
+                <a href="{{ route('registration') }}" class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-teal-700 text-white font-semibold text-sm shadow-lg shadow-teal-700/25 hover:bg-teal-800 active:scale-95 transition-all">
                     Daftar Sekarang <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
                 </a>
             </div>
+
+            <!-- Tombol Mobile Menu -->
+            <button id="mobile-menu-btn" type="button" class="lg:hidden p-2.5 rounded-xl text-slate-600 hover:text-teal-700 hover:bg-teal-50 transition" aria-label="Buka menu navigasi">
+                <i class="fa-solid fa-bars text-lg"></i>
+            </button>
         </nav>
+
+        <!-- Dropdown Mobile Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden mt-2 glass-card rounded-2xl shadow-xl px-5 py-4 space-y-2.5">
+            <a href="{{ route('home') }}" class="block px-3 py-2 rounded-xl text-sm font-medium text-slate-700 hover:bg-teal-50 hover:text-teal-700 transition">Beranda</a>
+            <a href="#keunggulan" class="block px-3 py-2 rounded-xl text-sm font-medium text-slate-700 hover:bg-teal-50 hover:text-teal-700 transition">Keunggulan</a>
+            <a href="#katalog" class="block px-3 py-2 rounded-xl text-sm font-medium text-slate-700 hover:bg-teal-50 hover:text-teal-700 transition">Katalog</a>
+            <a href="#pendaftaran" class="block px-3 py-2 rounded-xl text-sm font-medium text-slate-700 hover:bg-teal-50 hover:text-teal-700 transition">Cara Daftar</a>
+            <a href="#media" class="block px-3 py-2 rounded-xl text-sm font-medium text-slate-700 hover:bg-teal-50 hover:text-teal-700 transition">Media</a>
+            <a href="{{ route('registration') }}" class="block px-3 py-2 rounded-xl text-sm font-semibold text-amber-600 hover:bg-amber-50 transition">Daftar Kursus</a>
+            <a href="#kontak" class="block px-3 py-2 rounded-xl text-sm font-medium text-slate-700 hover:bg-teal-50 hover:text-teal-700 transition">Kontak</a>
+
+            <div class="pt-2 border-t border-slate-200/80 space-y-2">
+                @auth
+                    <a href="{{ route('admin.profile') }}"
+                       class="block px-3 py-2.5 rounded-xl text-sm font-bold text-teal-800 bg-teal-50 border border-teal-200">
+                        <i class="fa-solid fa-user-check mr-2"></i> Profil Saya
+                    </a>
+                @else
+                    <a href="{{ route('login') }}"
+                       class="block px-3 py-2.5 rounded-xl text-sm font-bold text-teal-800 bg-teal-50 border border-teal-200">
+                        <i class="fa-solid fa-right-to-bracket mr-2"></i> Login Admin / Staff
+                    </a>
+                @endauth
+
+                <a href="{{ route('registration') }}" class="w-full inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-teal-700 text-white font-semibold text-sm shadow-md hover:bg-teal-800 transition-all">
+                    Daftar Sekarang <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
+                </a>
+            </div>
+        </div>
     </header>
 
     <!-- MAIN CONTENT -->
     <main class="flex-grow container mx-auto px-4 sm:px-8 lg:px-16 py-8 space-y-16">
-        
+
         <!-- HERO SECTION -->
-        <section class="py-12">
+        <section id="media" class="py-12">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                 <div class="lg:col-span-7 space-y-6">
                     <span class="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs font-semibold bg-teal-50 text-teal-700 border border-teal-200 shadow-sm">
@@ -93,7 +145,7 @@
                     <p class="text-lg text-slate-600 leading-relaxed">
                         Platform belajar teknologi untuk mahasiswa yang ingin meningkatkan kemampuan pemrograman web dengan kurikulum berbasis proyek nyata.
                     </p>
-                    
+
                     <!-- Tombol Aksi Hero (Ditambahkan tombol 'Lihat Estimasi Biaya' sesuai referensi) -->
                     <div class="flex flex-wrap gap-4 pt-2">
                         <a href="#katalog" class="inline-flex items-center justify-center px-6 py-3.5 rounded-xl bg-teal-700 text-white font-semibold shadow-lg shadow-teal-700/25 hover:bg-teal-800 active:scale-95 transition-all">
@@ -102,7 +154,7 @@
                         <a href="#katalog" class="inline-flex items-center justify-center px-6 py-3.5 rounded-xl bg-slate-100 text-slate-700 font-semibold border border-slate-200 hover:bg-slate-200 transition-all">
                             <i class="fa-solid fa-calculator mr-2"></i> Lihat Estimasi Biaya
                         </a>
-                        <a href="http://kursusku.test/registration" class="inline-flex items-center justify-center px-6 py-3.5 rounded-xl bg-white text-slate-700 font-semibold border border-slate-300 hover:bg-slate-50 transition-all">
+                        <a href="{{ route('registration') }}" class="inline-flex items-center justify-center px-6 py-3.5 rounded-xl bg-white text-slate-700 font-semibold border border-slate-300 hover:bg-slate-50 transition-all">
                             <i class="fa-solid fa-user-plus mr-2"></i> Daftar Kursus
                         </a>
                     </div>
@@ -194,7 +246,7 @@
                             <span class="text-slate-500 text-sm">Biaya</span>
                             <span class="text-lg font-extrabold text-teal-700 font-mono">Rp 200.000</span>
                         </div>
-                        <a href="http://kursusku.test/registration?course=WEB-01" class="w-full inline-flex items-center justify-center px-4 py-3 rounded-xl bg-teal-700 text-white font-semibold text-sm hover:bg-teal-800 transition-all shadow-md shadow-teal-700/20">
+                        <a href="{{ route('registration', ['course' => 'WEB-01']) }}" class="w-full inline-flex items-center justify-center px-4 py-3 rounded-xl bg-teal-700 text-white font-semibold text-sm hover:bg-teal-800 transition-all shadow-md shadow-teal-700/20">
                             Daftar Sekarang <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
                         </a>
                     </div>
@@ -221,7 +273,7 @@
                             <span class="text-slate-500 text-sm">Biaya</span>
                             <span class="text-lg font-extrabold text-teal-700 font-mono">Rp 250.000</span>
                         </div>
-                        <a href="http://kursusku.test/registration?course=PHP-01" class="w-full inline-flex items-center justify-center px-4 py-3 rounded-xl bg-teal-700 text-white font-semibold text-sm hover:bg-teal-800 transition-all shadow-md shadow-teal-700/20">
+                        <a href="{{ route('registration', ['course' => 'PHP-01']) }}" class="w-full inline-flex items-center justify-center px-4 py-3 rounded-xl bg-teal-700 text-white font-semibold text-sm hover:bg-teal-800 transition-all shadow-md shadow-teal-700/20">
                             Daftar Sekarang <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
                         </a>
                     </div>
@@ -248,7 +300,7 @@
                             <span class="text-slate-500 text-sm">Biaya</span>
                             <span class="text-lg font-extrabold text-teal-700 font-mono">Rp 350.000</span>
                         </div>
-                        <button disabled class="w-full inline-flex items-center justify-center px-4 py-3 rounded-xl bg-slate-200 text-slate-400 font-semibold text-sm cursor-not-allowed">
+                        <button type="button" disabled class="w-full inline-flex items-center justify-center px-4 py-3 rounded-xl bg-slate-200 text-slate-400 font-semibold text-sm cursor-not-allowed">
                             Kursus Penuh
                         </button>
                     </div>
@@ -315,5 +367,18 @@
             <p class="text-xs text-slate-500">&copy; 2026 <strong>KursusKu</strong>. Hak Cipta Dilindungi. Laravel v10.50.4</p>
         </div>
     </footer>
+
+    <!-- Script Toggle Menu Mobile -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            if (btn && menu) {
+                btn.addEventListener('click', function () {
+                    menu.classList.toggle('hidden');
+                });
+            }
+        });
+    </script>
 </body>
 </html>
